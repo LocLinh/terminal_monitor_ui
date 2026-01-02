@@ -1,0 +1,16 @@
+[Database] Error: mssql: login error: Login failed for user ''.
+
+[Database] Error: mssql: login error: Login failed for user ''.
+
+[Database] Error: parse "sqlserver://sa:123456@tcp:localhost,1433?database=master": invalid port ":localhost,1433" after host
+
+[Database] Error: lookup localhost,1433: no such host
+
+no topics provided
+no topics provided
+no topics provided
+[Database] Error: unable to open tcp connection with host 'localhost:1433': dial tcp 127.0.0.1:1433: connect: connection refused
+
+read tcp 192.168.91.183:44644->172.16.200.117:9092: i/o timeout
+[Database] Error: unable to open tcp connection with host 'localhost:1433': dial tcp 127.0.0.1:1433: connect: connection refused
+

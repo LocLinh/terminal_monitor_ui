@@ -1,0 +1,20 @@
+Kafka:
+    Addrs:
+        - 172.16.200.116:9092
+        - 172.16.200.117:9092
+        - 172.16.200.118:9092
+    TopicNames:
+        ProductTester: wms_qc.cdc_main_src.qc_fulfillment_inventory.wms_product_tester
+    Group: local_worker
+    MaxMessageBytes: 64
+    Compress: true
+    Newest: false
+    Version: '2.6.0'
+    Partition: 1
+
+SqlServer:
+    ServerName: localhost:1433
+    User: sa
+    Password: 123456
+    Port: 
+    Database: master
