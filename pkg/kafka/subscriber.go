@@ -83,9 +83,7 @@ func (s *subscriber) Read(callback CallBack, errRestart chan error) {
 	}
 
 	wg := &sync.WaitGroup{}
-	wg.Add(1)
-	go func() {
-		defer wg.Done()
+	wg.Go(func() {
 		for {
 			if err := s.consumer.Consume(ctx, s.topics, c); err != nil {
 				zap.S().Errorf("kafka consume topics err: %v", err)
@@ -100,7 +98,7 @@ func (s *subscriber) Read(callback CallBack, errRestart chan error) {
 			}
 			c.ready = make(chan bool)
 		}
-	}()
+	})
 
 	<-c.ready // Await till the consumer has been set up
 	// zap.S().Debug("kafka consumer up and running!...")

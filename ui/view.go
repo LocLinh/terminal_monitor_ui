@@ -20,18 +20,8 @@ func (m UiModel) View() string {
 		fmt.Fprintf(&s, "%s\n", err)
 	}
 
-	// The footer
-	s.WriteString("\nPress q to quit.\n")
-
-	// Logs
-	s.WriteString("\nLogs:\n")
-	for _, log := range m.Logs {
-		fmt.Fprintf(&s, "%s\n", log)
-	}
-
 	tableRows := []table.Row{}
 	for _, lag := range m.MessageBehind {
-		fmt.Fprintf(&s, "topic: %s, behind: %d\n", lag.Topic, lag.Lag)
 		tableRows = append(tableRows, table.Row{
 			lag.Topic, strconv.FormatInt(lag.Partition, 10), strconv.FormatInt(lag.Latest, 10), strconv.FormatInt(lag.Committed, 10), strconv.FormatInt(lag.Lag, 10),
 		})
@@ -40,10 +30,16 @@ func (m UiModel) View() string {
 	// Send the UI for rendering
 	m.MessageBehindTable.SetRows(tableRows)
 
+	view := lipgloss.JoinVertical(lipgloss.Left,
+		m.Stopwatch.View(),
+		m.MessageBehindTable.View(),
+		m.LogViewport.View(),
+	)
+
 	mainView := lipgloss.NewStyle().
 		BorderStyle(lipgloss.NormalBorder()).
 		BorderForeground(lipgloss.Color("63")). // purple
-		Render(m.Stopwatch.View(), "\n", m.MessageBehindTable.View())
+		Render(view)
 
 	return mainView + s.String()
 }

@@ -9,6 +9,7 @@ import (
 	tslc "github.com/NimbleMarkets/ntcharts/linechart/timeserieslinechart"
 	"github.com/charmbracelet/bubbles/stopwatch"
 	"github.com/charmbracelet/bubbles/table"
+	"github.com/charmbracelet/bubbles/viewport"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 )
@@ -44,6 +45,8 @@ func NewUI(cfg *config.AppConfig, logChan chan string) UiModel {
 			{Title: "Committed", Width: 12},
 			{Title: "Lag", Width: 12},
 		}),
+		table.WithFocused(true),
+		table.WithHeight(7),
 	)
 	tableStyle := table.DefaultStyles()
 	tableStyle.Header = tableStyle.Header.
@@ -57,6 +60,12 @@ func NewUI(cfg *config.AppConfig, logChan chan string) UiModel {
 		Bold(false)
 	messageBehindTable.SetStyles(tableStyle)
 
+	vp := viewport.New(100, 10)
+	vp.Style = lipgloss.NewStyle().
+		BorderStyle(lipgloss.RoundedBorder()).
+		BorderForeground(lipgloss.Color("62")).
+		PaddingRight(2)
+
 	return UiModel{
 		Errors:             []string{},
 		ThroughputChart:    chart.InitChart(),
@@ -65,6 +74,7 @@ func NewUI(cfg *config.AppConfig, logChan chan string) UiModel {
 		MessageBehindTable: messageBehindTable,
 		Stopwatch:          stopwatch.NewWithInterval(time.Millisecond),
 		LogChan:            logChan,
+		LogViewport:        vp,
 	}
 }
 

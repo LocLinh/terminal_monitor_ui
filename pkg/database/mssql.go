@@ -23,7 +23,6 @@ func GetDB(cfg *config.AppConfig) (*gorm.DB, error) {
 		cfg.SqlServer.Password,
 		cfg.SqlServer.ServerName,
 		cfg.SqlServer.Database)
-	fmt.Println("dsn", dsn)
 	db, err := gorm.Open(sqlserver.Open(dsn), &gorm.Config{})
 	if err != nil {
 		_ = logger.WriteFile("./logger/error.txt", fmt.Sprintf("[Database] Error: %v\n\n", err))

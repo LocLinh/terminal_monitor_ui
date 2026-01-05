@@ -40,7 +40,6 @@ func NewMessageHandler(
 func (m *MessageHandler) Run(errRestart chan error) {
 	if len(m.reader) > 0 {
 		for _, sub := range m.reader {
-			sub := sub
 			go sub.Read(m.processMessage, errRestart)
 		}
 	}

@@ -8,6 +8,7 @@ import (
 	tslc "github.com/NimbleMarkets/ntcharts/linechart/timeserieslinechart"
 	"github.com/charmbracelet/bubbles/stopwatch"
 	"github.com/charmbracelet/bubbles/table"
+	"github.com/charmbracelet/bubbles/viewport"
 )
 
 type UiModel struct {
@@ -20,6 +21,7 @@ type UiModel struct {
 	Stopwatch          stopwatch.Model
 	Logs               []string
 	LogChan            chan string
+	LogViewport        viewport.Model
 }
 
 type LogMsg string

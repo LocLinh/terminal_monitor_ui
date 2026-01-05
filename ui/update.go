@@ -1,6 +1,7 @@
 package ui
 
 import (
+	"strings"
 	"time"
 
 	"github.com/IBM/sarama"
@@ -26,6 +27,8 @@ func (m UiModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		if len(m.Logs) > 100 {
 			m.Logs = m.Logs[1:]
 		}
+		m.LogViewport.SetContent(strings.Join(m.Logs, "\n"))
+		m.LogViewport.GotoBottom()
 		return m, waitForLog(m.LogChan)
 	case LagMetricsMsg:
 		m.MessageBehind = msg
@@ -42,6 +45,7 @@ func (m UiModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	var cmd tea.Cmd
 	m.Stopwatch, cmd = m.Stopwatch.Update(msg)
+	m.LogViewport, _ = m.LogViewport.Update(msg)
 
 	return m, cmd
 
